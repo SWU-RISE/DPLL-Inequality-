@@ -66,8 +66,12 @@
 	a_{n,1} & a_{n,2} & \cdots & a_{n,n}& b_n  \\
 	b_1     &  b_2    &  \cdots&   b_n  & c
 \end{pmatrix}\]
-where $a_{i,j} \in \RR, a_{i,j}=a_{j,i}, b_i\in \RR, c\in \RR, i,j=1,\cdots, n $. Let \[f=[\xx_1,\cdots, \xx_n,1]\AA[\xx_1,\cdots, \xx_n, 1]^T.\] Let $g=\sum_{i=1}^nd_i\xx_i-C$ where $d_i\neq 0$. If there exists $i,j,k\in \{1,\cdots, n\}$ such that
-one of 1,2,3,4 holds, then 
+where $a_{i,j} \in \RR, a_{i,j}=a_{j,i}, b_i\in \RR, c\in \RR, i,j=1,\cdots, n $. Let \[f=[\xx_1,\cdots, \xx_n,1]\AA[\xx_1,\cdots, \xx_n, 1]^T.\] 
+Let $g=\sum_{i=1}^n\xx_i-C$. 
+Let \[
+B=\max\{a_{i,j}\frac{A^2}{2}  \mid i> j,\ i,j=1,\cdots,n \}, C=\min\{a_{i,j}\frac{A^2}{2}  \mid i> j,\ i,j=1,\cdots,n \}.\]  
+If there exists $i,j,k\in \{1,\cdots, n\}$ such that
+one of 1,2,3,4  in the following holds, then 
 \begin{enumerate}
 		\item  $a_{i,h}>a_{j,h}>a_{k,h}$ for $h=1,\cdots, n$, $b_{i}>b_{j}>b_{k}$ and $(d_j-d_i)(d_k-d_j)\le 0$
 		\item  $a_{i,h}<a_{j,h}<a_{k,h}$ for $h=1,\cdots, n$, $b_{i}<b_{j}<b_{k}$ and $(d_j-d_i)(d_k-d_j)\le 0$
@@ -76,7 +80,11 @@ one of 1,2,3,4 holds, then
 \end{enumerate}
 
 .
-
+	\begin{align}
+&f \label{eq:obj4}\\
+\mbox{s.\ t.}\quad &g=0 \nonumber\\
+& x_i\ge 0,\quad i=1\cdots,n \nonumber
+\end{align}
 
   $a_1,\cdots,a_n>0,$ $b_{i,j}\in \RR, i> j, i,j =1,\cdots, n$
 	and $A>0$ are given constants.   Let \[
