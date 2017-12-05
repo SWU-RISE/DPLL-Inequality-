@@ -1,0 +1,150 @@
+\documentclass{llncs}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{indentfirst}
+\usepackage{amsfonts}
+\usepackage{latexsym,amsmath,epsfig,amssymb,graphics}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{stmaryrd}
+\usepackage{caption}
+\usepackage[ruled]{algorithm2e}
+
+\usepackage[english]{babel}
+\newtheorem{conj}{Conjecture}
+
+%自定义的宏
+\include{def}
+% 图片路径
+\graphicspath{{img/}}
+
+\title{DPLL(Inequality) for Solving Polynomial Constrained Problems}
+\author{Liyun Dai}
+\institute{RISE, Southwest University, Chongqing, China \\
+	\email{dailiyun@swu.edu.cn}
+}
+
+
+\begin{document}
+	
+	\maketitle
+%	
+%\input{section/intro}
+%
+%\begin{definition}[Rule1]
+%	Given a polynomial $f(\xx)\in \ZZ[\xx]$ and $  f=\sum_{i=1}^s\delta_i(\sum_{j=1}^{n_i}a_{i,j}\xx^{k_{i,j}})^2$, where $\delta_i,a_{i,j}\in \RR, k_{i,j}\in \NN^{|\xx|}$. We use $\pi_1\left({\{\delta_i,a_{i,j} \}}\right)$ denote the number of  irrational elements which occur  in set $\{\delta_i,a_{i,j} \}$. We say SOS decomposition $f=\sum_{i=1}^s\delta_i(\sum_{j=1}^{n_i}a_{i,j}\xx^{k_{i,j}})^2$ is more beautiful than decomposition $f=\sum_{i=1}^{s'}\delta'_i(\sum_{j=1}^{n'_i}a'_{i,j}\xx^{k'_{i,j}})^2$ if $\pi_1\left({\{\delta_i,a_{i,j} \}}\right)\le \pi_1\left({\{\delta'_i,a'_{i,j} \}}\right).$
+%	
+%\end{definition}
+%
+%\begin{example}
+%Let $f=x^2+4x+7$, then SOS 	decomposition $f=(x+2)^2+3$ is more beautiful than $f=\frac{1}{2}(x+\sqrt{2})^2+\frac{1}{2}(x+4-\sqrt{2})^2+4\sqrt{2}-3$.
+%\end{example}
+%
+%
+%\begin{definition}[Rule2]
+%	Given a polynomial $f(\xx)\in \ZZ[\xx]$ and $  f=\sum_{i=1}^s\delta_i(\sum_{j=1}^{n_i}a_{i,j}\xx^{k_{i,j}})^2$, where $\delta_i,a_{i,j}\in \RR, k_{i,j}\in \NN^{|\xx|}$.  We say SOS decomposition $f=\sum_{i=1}^s\delta_i(\sum_{j=1}^{n_i}a_{i,j}\xx^{k_{i,j}})^2$ is more beautiful than decomposition $f=\sum_{i=1}^{s'}\delta'_i(\sum_{j=1}^{n'_i}a'_{i,j}\xx^{k'_{i,j}})^2$ if $\pi_1\left({\{\delta_i,a_{i,j} \}}\right)= \pi_1\left({\{\delta'_i,a'_{i,j} \}}\right) $ and $|\{\delta_i,a_{i,j} \}|\le |\{\delta'_i,a'_{i,j} \} | $.
+%	
+%\end{definition}
+%
+%\begin{example}
+%Let $f=x^2+4x+7$, then SOS 	decomposition $f=(x+2)^2+3$ is  more beautiful than decomposition
+%$f=\frac{1}{2}(x+3)^2+\frac{1}{2}(x+1)^2+2$.
+%
+%\end{example}
+%		
+
+
+
+\begin{theorem}
+	Let 
+\[\AA = 
+\begin{pmatrix}
+	a_{1,1} & a_{1,2} & \cdots & a_{1,n}& b_1 \\
+	a_{2,1} & a_{2,2} & \cdots & a_{2,n}& b_2 \\
+	\vdots  & \vdots  & \ddots & \vdots & \vdots \\
+	a_{n,1} & a_{n,2} & \cdots & a_{n,n}& b_n  \\
+	b_1     &  b_2    &  \cdots&   b_n  & c
+\end{pmatrix}\]
+where $a_{i,j} \in \RR, a_{i,j}=a_{j,i}, b_i\in \RR, c\in \RR, i,j=1,\cdots, n $. Let \[f=[\xx_1,\cdots, \xx_n,1]\AA[\xx_1,\cdots, \xx_n, 1]^T.\] Let $g=\sum_{i=1}^nd_i\xx_i-C$ where $d_i\neq 0$. If there exists $i,j,k\in \{1,\cdots, n\}$ such that
+one of 1,2,3,4 holds, then 
+\begin{enumerate}
+		\item  $a_{i,h}>a_{j,h}>a_{k,h}$ for $h=1,\cdots, n$, $b_{i}>b_{j}>b_{k}$ and $(d_j-d_i)(d_k-d_j)\le 0$
+		\item  $a_{i,h}<a_{j,h}<a_{k,h}$ for $h=1,\cdots, n$, $b_{i}<b_{j}<b_{k}$ and $(d_j-d_i)(d_k-d_j)\le 0$
+		\item  $a_{i,h}\ge a_{j,h}\ge a_{k,h}$ for $h=1,\cdots, n$, $b_{i}\ge b_{j}\ge b_{k}$ and $(d_j-d_i)(d_k-d_j)< 0$
+		\item  $a_{i,h}\le a_{j,h}\le a_{k,h}$ for $h=1,\cdots, n$, $b_{i}\le b_{j}\le b_{k}$ and $(d_j-d_i)(d_k-d_j)< 0$
+\end{enumerate}
+
+.
+
+
+  $a_1,\cdots,a_n>0,$ $b_{i,j}\in \RR, i> j, i,j =1,\cdots, n$
+	and $A>0$ are given constants.   Let \[
+	 B=\max\{b_{i,j}\frac{A^2}{4a_{i}a_{j}}  \mid i> j,\ i,j=1,\cdots,n \}, C=\min\{b_{i,j}\frac{A^2}{4a_{i}a_{j}}  \mid i> j,\ i,j=1,\cdots,n \}.\]  
+	 Let $f=\sum_{i=1}^n\sum_{j=1}^{i-1}b_{i,j}x_{i}x_{j}$.
+	 Then $ \max\{0,B\}, \min\{0,C\}$ are the maximum, minimum values of (\ref{eq:obj}), respectively.
+	 	\begin{align}
+	 	&\sum_{i=1}^n\sum_{j=1}^{i-1}b_{i,j}x_{i}x_{j}  \label{eq:obj}\\
+	 	\mbox{s.\ t.}\qquad	&\sum_{i=1}^na_ix_i=A \nonumber\\
+	 	& x_i\ge 0,\quad i=1\cdots,n \nonumber
+	 	\end{align}
+%	 	
+% Let \[D=\min\{b_{i,i}\left(\frac{A}{a_{i}}\right)^2\mid i=1,\cdots, n\},
+% \ E=\min\{b_{i,j}\frac{A^2}{4a_{i}a_{j}}  \mid i> j,\ i,j=1,\cdots,n \}.\]  
+%Then $ \min\{D,E\}$ is the minimum value of (\ref{eq:obj}).
+\end{theorem}
+\begin{proof}
+	Let $g=\sum_{i=1}^na_ix_i-A$.
+	We prove it by induction. When $n=2$, it is easy to check that the conclusion holds. Assume the conclusion holds
+	when $n\le N$.
+	
+	If $n=N+1$.   In the following, we will prove that $f$ can achieve   $B,C$ in feasible area. Firstly, if $B=b_{k,k}\left(\frac{A}{a_{k}}\right)^2$, then let $\alpha$ is a vector such that 
+	\[\alpha[i]=\begin{cases}
+	\frac{A}{a_k}       & \quad   \text{ if  } i=k\\
+	0  & \quad \text{ otherwise.}
+	\end{cases} 	\]	
+	 Then $\alpha$ satisfying (\ref{eq:obj})'s constraints and $f(\alpha)=B$. Secondly, if $C=b_{k,h}\frac{A^2}{4a_{k}a_{h}}, k\neq h$,
+	 then let $\beta$  is a vector such that 
+	 	\[\beta[i]=\begin{cases}
+	 	\frac{A}{2a_k}       & \quad   \text{ if  } i=k\\
+	 	\frac{A}{2a_h}       & \quad   \text{ if  } i=h\\
+	 	0  & \quad \text{ otherwise.}
+	 	\end{cases} 
+	 	\]	
+	  Then $\beta$ satisfying (\ref{eq:obj})'s constraints and $f(\beta)=C$.	
+	
+	  Let $\ksi=(\ksi_1,\cdots, \ksi_n)$ is a vector which makes $f$ to  achieve an extreme  value under constrains.  If there is $\ksi_i=0$, 
+	  without loss of generality let $\ksi_1=0$, by the induction, the maximum value of (\ref{eq:obj2}) is $\max\{ B_1, C_1\}$
+	  where 
+	   \[\ B_1=\max\{b_{i,j}\frac{A^2}{4a_{i}a_{j}}  \mid i> j, i,j=2,\cdots,n \},
+	   \ C_1=\min\{b_{i,j}\frac{A^2}{4a_{i}a_{j}}  \mid i> j, i,j=2,\cdots,n \}.\] 
+	   It is easy to see that $B_1\le B$ and $C_1\ge C$. Additionally $g$ can  achieve $B,C$ in feasible area, hence $\max\{ B_1, 0\}=\max\{ B, 0\}　$ and $\min\{ C_1, 0\}=\min\{ C, 0\}　$, the conclusion holds.  Otherwise, $\ksi_i>0$ for $i=1,\cdots, n$, in other words $\ksi$ is an interior point of feasible area. By  KKT condition, there is a $\mu\in \RR$ such that  
+	   \[\triangledown f(\ksi) = \mu\triangledown g(\ksi)  \]
+	   where \[\triangledown f(\ksi)=[\frac{\partial f(\ksi)}{\partial x_1},\cdots, \frac{\partial f(\ksi)}{\partial x_n}], \ \triangledown g(\ksi)=[a_1,\cdots, a_n].\]
+	   $\frac{\partial f(\ksi)}{\partial x_i}=\sum_{j=1}^{i-1}b_{i,j}\ksi_j+b_{i,i}\ksi_i=\mu a_i$.
+	  	\begin{align}
+	  	&\sum_{i=2}^n\sum_{j=2}^nb_{i,j}x_{i}x_{j}  \label{eq:obj2}\\
+	  	\mbox{s.\ t.}\qquad	&\sum_{i=2}^na_ix_i=A \nonumber\\
+	  	& x_i\ge 0,\quad i=2\cdots,n \nonumber
+	  	\end{align}
+\qed	
+\end{proof}
+
+
+\begin{problem}
+	How to compute the minimum value of (\ref{eq:obj})?
+\end{problem}
+\begin{problem}
+	  $a_1,\cdots,a_n\neq 0,l_i\cdots,l_n\in \RR, u_1,\cdots,u_n\in \RR, u_i\ge l_i$,  $b_{i,j}\in \RR, i,j=1,\cdots, n$ and $A$ are given constants. 
+	\begin{align}
+	&\sum_{i=1}^n\sum_{j=1}^nb_{i,j}x_{i}x_{j}  \label{opt:cost}\\
+	\mbox{s.\ t.}\qquad	&\sum_{i=1}^na_ix_i=A \nonumber\\
+	&l_i\le x_i\le u_i\quad i=1,\cdots,n \nonumber
+	\end{align}
+	where $x_i\in \RR,\ i =1,\cdots, n$.
+How to compute the maximum and minimum values of (\ref{opt:cost})?
+\end{problem}
+	
+
+
+\end{document}
